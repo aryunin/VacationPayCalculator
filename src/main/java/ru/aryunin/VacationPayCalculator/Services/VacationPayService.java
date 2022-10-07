@@ -28,7 +28,7 @@ public class VacationPayService {
                                  double averageSalary) {
         VacationPay vacationPay = new VacationPay();
         int workingDaysCount = getWorkingDaysCount(startDate, endDate);
-        vacationPay.setAmount((averageSalary/29.3)*workingDaysCount);
+        vacationPay.setAmount((int)((averageSalary/29.3)*workingDaysCount*100)/100.);
         return vacationPay;
     }
 }
