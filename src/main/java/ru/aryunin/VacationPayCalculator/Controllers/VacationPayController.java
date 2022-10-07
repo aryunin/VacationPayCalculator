@@ -18,6 +18,13 @@ public class VacationPayController {
     private final VacationPayService vacationPayService;
     private final ModelMapper modelMapper;
 
+    /**
+     * Calculate vacation pay
+     * @param startDate start date of vacation
+     * @param endDate end date of vacation
+     * @param averageSalary average salary (per month)
+     * @return vacation pay
+     */
     @GetMapping("/calculate")
     public VacationPayDTO calculate(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate,
