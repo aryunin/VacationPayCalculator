@@ -14,7 +14,7 @@ import java.util.GregorianCalendar;
 public class WorkingDaysCalendar {
     private final Calendar calendar = new GregorianCalendar();
     private final Date[] holidays = {
-            new GregorianCalendar(120, Calendar.JANUARY, 1),
+            new Date(120, Calendar.JANUARY, 1),
             new Date(120, Calendar.JANUARY, 2),
             new Date(120, Calendar.JANUARY, 3),
             new Date(120, Calendar.JANUARY, 4),
