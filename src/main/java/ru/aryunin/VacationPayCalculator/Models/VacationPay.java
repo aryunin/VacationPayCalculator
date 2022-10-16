@@ -1,14 +1,10 @@
 package ru.aryunin.VacationPayCalculator.Models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
 import java.io.Serializable;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class VacationPay implements Serializable {
     private static final long serialVersionUID = 2168369073827051629L;
     private double amount;
