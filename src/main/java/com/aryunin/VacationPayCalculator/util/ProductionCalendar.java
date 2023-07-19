@@ -1,69 +1,62 @@
 package com.aryunin.VacationPayCalculator.util;
 
 import com.aryunin.VacationPayCalculator.exception.NegativeDaysException;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Component;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
 public class ProductionCalendar {
-    private static final Set<LocalDate> holidays = new HashSet<>();
+    private final Set<LocalDate> holidays = new HashSet<>();
 
-    // 2023
-    static {
-        int year = 2023;
-        holidays.add(LocalDate.of(year, Month.JANUARY, 2));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 3));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 4));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 5));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 6));
-        holidays.add(LocalDate.of(year, Month.FEBRUARY, 23));
-        holidays.add(LocalDate.of(year, Month.FEBRUARY, 24));
-        holidays.add(LocalDate.of(year, Month.MARCH, 8));
-        holidays.add(LocalDate.of(year, Month.MAY, 1));
-        holidays.add(LocalDate.of(year, Month.MAY, 8));
-        holidays.add(LocalDate.of(year, Month.MAY, 9));
-        holidays.add(LocalDate.of(year, Month.JUNE, 12));
-        holidays.add(LocalDate.of(year, Month.NOVEMBER, 6));
+    public ProductionCalendar() {
+        String resourcePath = "classpath:static/holidays.txt";
+        Resource resource = loadHolidaysFromResource(resourcePath);
+        parseHolidaysFromResource(resource);
     }
 
-    // 2024
-    static {
-        int year = 2024;
-        holidays.add(LocalDate.of(year, Month.JANUARY, 1));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 2));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 3));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 4));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 5));
-        holidays.add(LocalDate.of(year, Month.JANUARY, 8));
-        holidays.add(LocalDate.of(year, Month.FEBRUARY, 23));
-        holidays.add(LocalDate.of(year, Month.MARCH, 8));
-        holidays.add(LocalDate.of(year, Month.APRIL, 29));
-        holidays.add(LocalDate.of(year, Month.APRIL, 30));
-        holidays.add(LocalDate.of(year, Month.MAY, 1));
-        holidays.add(LocalDate.of(year, Month.MAY, 9));
-        holidays.add(LocalDate.of(year, Month.MAY, 10));
-        holidays.add(LocalDate.of(year, Month.JUNE, 12));
-        holidays.add(LocalDate.of(year, Month.NOVEMBER, 4));
-        holidays.add(LocalDate.of(year, Month.DECEMBER, 30));
-        holidays.add(LocalDate.of(year, Month.DECEMBER, 31));
+    private Resource loadHolidaysFromResource(String resourcePath) {
+        ResourceLoader resourceLoader = new DefaultResourceLoader();
+        return resourceLoader.getResource(resourcePath);
     }
 
-    private ProductionCalendar() {
+    private void parseHolidaysFromResource(Resource resource) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        try {
+            InputStream stream = resource.getInputStream();
+            BufferedReader br = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+            String line;
+            while ((line = br.readLine()) != null) {
+                LocalDate date = LocalDate.parse(line, formatter);
+                holidays.add(date);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static boolean isWeekend(LocalDate date) {
+    public boolean isWeekend(LocalDate date) {
         return date.getDayOfWeek() == DayOfWeek.SATURDAY ||
                 date.getDayOfWeek() == DayOfWeek.SUNDAY;
     }
 
-    public static boolean isHoliday(LocalDate date) {
+    public boolean isHoliday(LocalDate date) {
         return holidays.contains(date);
     }
 
-    public static int countWorkingDays(LocalDate start, LocalDate end) {
+    public int countWorkingDays(LocalDate start, LocalDate end) {
         if(end.isBefore(start)) throw new NegativeDaysException();
         LocalDate current = start;
         int counter = 0;
