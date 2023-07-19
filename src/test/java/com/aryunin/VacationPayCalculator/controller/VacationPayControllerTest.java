@@ -1,5 +1,6 @@
 package com.aryunin.VacationPayCalculator.controller;
 
+import com.aryunin.VacationPayCalculator.exception.NegativeDaysException;
 import com.aryunin.VacationPayCalculator.exception.NegativeSalaryException;
 import com.aryunin.VacationPayCalculator.service.VacationPayService;
 import org.junit.jupiter.api.Test;
@@ -51,7 +52,7 @@ class VacationPayControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResolvedException() instanceof NegativeSalaryException))
                 .andExpect(result -> assertEquals(
-                        Objects.requireNonNull(result.getResolvedException()).getMessage(), "ERROR: negative salary"
+                        "negative salary", Objects.requireNonNull(result.getResolvedException()).getMessage()
                 ));
     }
 
@@ -62,9 +63,9 @@ class VacationPayControllerTest {
                         .param("salary", "1200000.00")
                         .param("days", "-1"))
                 .andExpect(status().isBadRequest())
-                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NegativeSalaryException))
+                .andExpect(result -> assertTrue(result.getResolvedException() instanceof NegativeDaysException))
                 .andExpect(result -> assertEquals(
-                        Objects.requireNonNull(result.getResolvedException()).getMessage(), "ERROR: negative days"
+                        "negative days", Objects.requireNonNull(result.getResolvedException()).getMessage()
                 ));
     }
 }
