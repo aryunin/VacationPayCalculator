@@ -35,8 +35,8 @@ class VacationPayServiceTest {
     void calculate_withStartDate_success() {
         int days = 15;
         double salary = 45000;
-        LocalDate startDate = LocalDate.of(2024, Month.JANUARY, 1);
-        LocalDate endDate = startDate.plusDays(days);
+        var startDate = LocalDate.of(2024, Month.JANUARY, 1);
+        var endDate = startDate.plusDays(days);
         double expected = salary / 29.3 * (days - 10);
 
         Mockito.when(productionCalendar.countWorkingDays(startDate, endDate)).thenReturn(5);
