@@ -26,7 +26,7 @@ class VacationPayServiceTest {
         int days = 15;
         double salary = 45000;
         LocalDate startDate = LocalDate.of(2024, Month.JANUARY, 1);
-        double expected = salary / 29.3 * (days - 11);
+        double expected = salary / 29.3 * (days - 10);
 
         double actual = vacationPayService.calculate(salary, days, startDate);
 

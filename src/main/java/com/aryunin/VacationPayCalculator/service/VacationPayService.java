@@ -15,6 +15,6 @@ public class VacationPayService {
 
     public double calculate(double salary, int days, LocalDate startDate) {
         LocalDate endDate = startDate.plusDays(days);
-        return salary / avgDaysInMonth * (days - ProductionCalendar.countWorkingDays(startDate, endDate));
+        return salary / avgDaysInMonth * (ProductionCalendar.countWorkingDays(startDate, endDate));
     }
 }
