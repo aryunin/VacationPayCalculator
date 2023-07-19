@@ -31,7 +31,7 @@ public class ProductionCalendar {
 
     // 2024
     static {
-        int year = 2023;
+        int year = 2024;
         holidays.add(LocalDate.of(year, Month.JANUARY, 1));
         holidays.add(LocalDate.of(year, Month.JANUARY, 2));
         holidays.add(LocalDate.of(year, Month.JANUARY, 3));
