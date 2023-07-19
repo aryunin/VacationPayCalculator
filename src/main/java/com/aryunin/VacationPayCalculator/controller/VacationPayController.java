@@ -9,7 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
+import java.util.Locale;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +25,9 @@ public class VacationPayController {
                              @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate) {
         if(salary < 0) throw new NegativeSalaryException();
         if(days < 0) throw new NegativeDaysException();
-        return null;
+        var result = (startDate == null) ?
+                vacationPayService.calculate(salary, days) : vacationPayService.calculate(salary, days, startDate);
+        var formatter = new DecimalFormat("#.##", DecimalFormatSymbols.getInstance(Locale.ENGLISH));
+        return formatter.format(result);
     }
 }
