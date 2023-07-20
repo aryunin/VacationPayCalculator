@@ -3,21 +3,23 @@ package com.aryunin.VacationPayCalculator.service;
 import com.aryunin.VacationPayCalculator.util.ProductionCalendar;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
 import java.time.Month;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = VacationPayService.class)
 class VacationPayServiceTest {
-    @Mock
+    @MockBean
     private ProductionCalendar productionCalendar;
-    @InjectMocks
+    @Autowired
     private VacationPayService vacationPayService;
 
     @Test
