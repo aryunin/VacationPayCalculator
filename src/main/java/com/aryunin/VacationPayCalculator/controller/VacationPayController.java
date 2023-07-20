@@ -31,7 +31,7 @@ public class VacationPayController {
         log.info(info);
 
         if(salary < 0) throw new NegativeSalaryException();
-        if(days < 1) throw new NegativeDaysException();
+        if(days < 0) throw new NegativeDaysException();
 
         var result = (startDate == null) ?
                 vacationPayService.calculate(salary, days) : vacationPayService.calculate(salary, days, startDate);
