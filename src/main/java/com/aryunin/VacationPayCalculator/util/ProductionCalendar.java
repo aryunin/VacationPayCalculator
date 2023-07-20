@@ -63,7 +63,7 @@ public class ProductionCalendar {
         if(end.isBefore(start)) throw new NegativeDaysException();
         var current = start;
         int counter = 0;
-        while (!current.equals(end.plusDays(1))) {
+        while (!current.equals(end)) {
             if(!isHoliday(current) && !isWeekend(current)) counter++;
             current = current.plusDays(1);
         }
