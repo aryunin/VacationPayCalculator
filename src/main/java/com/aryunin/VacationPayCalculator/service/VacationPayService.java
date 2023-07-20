@@ -22,7 +22,7 @@ public class VacationPayService {
     }
 
     public double calculate(double salary, int days, LocalDate startDate) {
-        var endDate = startDate.plusDays(days - 1);
+        var endDate = startDate.plusDays(days);
         int workingDays = productionCalendar.countWorkingDays(startDate, endDate);
         log.info("count of working days: " + workingDays);
         double result = salary / avgDaysInMonth * (workingDays);
