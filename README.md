@@ -12,6 +12,6 @@ startDate (optional) - дата начала отпуска (yyyy-mm-dd)
 
 
 ### Examples
-![image](https://github.com/aryunin/VacationPayCalculator/assets/37240301/54543269-b361-4414-a55e-1c204a919029)/
+![image](https://github.com/aryunin/VacationPayCalculator/assets/37240301/54543269-b361-4414-a55e-1c204a919029)
 ![image](https://github.com/aryunin/VacationPayCalculator/assets/37240301/81df8602-0ea2-42a2-aee4-16f1440f8ba3)
 
